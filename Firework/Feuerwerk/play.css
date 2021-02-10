@@ -1,0 +1,39 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0px;
+}
+
+#canvas {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.firecracker {
+    background-color: gray;
+    height: 100px;
+    width: 100px;
+    border-radius: 80px;
+    margin: 20px;
+    z-index: 10;
+}
+
+#backToDesign {
+    position: absolute;
+    font-size: 50px;
+    z-index: 10;
+    border-radius: 50px;
+}
+
+.fireworks {
+    position: absolute;
+    bottom: 4px;
+}
+
+.selected {
+    background-color: red;
+}

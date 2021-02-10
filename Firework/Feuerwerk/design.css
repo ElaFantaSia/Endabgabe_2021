@@ -1,0 +1,75 @@
+html {
+    display: flex;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex: 1;
+}
+
+.allDesign {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.upperDiv {
+    display: flex;
+    flex: 1;
+}
+
+.middleDiv {
+    display: flex;
+    flex: 20;
+    flex-direction: row;
+}
+
+.lowerDiv {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.canvas {
+    display: flex;
+    flex: 1;
+}
+
+#canvas {
+    display: flex;
+    flex: 1;
+    background-color: black;
+}
+
+.fireworks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.firecracker {
+    display: flex;
+    background-color: gray;
+    height: 150px;
+    width: 150px;
+    border-radius: 80px;
+    margin: 20px;
+}
+
+.control {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.selected {
+    background-color: red;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="design.css">
+    <script src="design.js" defer></script>
+    <title>Fireworks</title>
+</head>
+<body>
+    <div class="allDesign">
+        <div class="upperDiv">
+            <p>dieser Text</p>
+        </div>
+        <div class="middleDiv">
+            <div class="fireworks">
+                <div class="firecracker" id="firecracker1" firecrackerId=1></div>
+                <div class="firecracker"id="firecracker2" firecrackerId=2></div>
+                <div class="firecracker"id="firecracker3" firecrackerId=3></div>
+            </div>
+            <div class="canvas">
+                <canvas id="canvas" width="800" height="600"></canvas>
+            </div>
+        </div>
+        <div class="lowerDiv">
+            <div class="control">
+                <label>color1</label>
+                <input type="color" id="colorpicker1">
+            </div>
+            <div class="control">
+                <label>color2</label>
+                <input type="color" id="colorpicker2">
+            </div>
+            <div class="control">
+                <label>radius</label>
+                <input type="range" min="75" max="300" id="radius">
+            </div>
+            <div class="control">
+                <label>particles</label>
+                <input type="range" min="10" max="50" id="particles">
+            </div>
+            <div class="buttons">
+                <a href="play.html">
+                    <button type="button">Play</button>
+                </a>
+                <div>
+                    <button type="button" id="save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

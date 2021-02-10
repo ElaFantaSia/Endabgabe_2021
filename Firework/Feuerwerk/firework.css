@@ -1,0 +1,54 @@
+html {
+    display: flex;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex: 1;
+}
+
+#canvasDiv {
+    display: flex;
+    flex: 1;
+}
+
+#canvas {
+    display: flex;
+    margin: 20px;
+    background-color: black;
+}
+
+.content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.firecrackers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.firecracker {
+    display: flex;
+    background-color: gray;
+    height: 100px;
+    width: 100px;
+    border-radius: 80px;
+    margin: 20px;
+    z-index: 10;
+}
+
+.dragStart {
+    opacity: 0.3;
+}
+
+.dragEnd {
+    opacity: 1;
+}
+
+.hover {
+    border: 3px dotted #666;
+}
