@@ -1,7 +1,7 @@
 "use strict";
 var Firework;
 (function (Firework) {
-    let serverURL = "http://localhost:5001";
+    let serverURL = "https://endabgabe-eia2.herokuapp.com";
     let canvas = document.getElementById("canvas");
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;

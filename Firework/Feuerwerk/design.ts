@@ -9,7 +9,7 @@ namespace Firework {
     }
     window.addEventListener("load", loadWnd);
     
-    let serverURL: string = "https://ela-ela.herokuapp.com";
+    let serverURL: string = "https://endabgabe-eia2.herokuapp.com";
 
     let color1: HTMLInputElement = <HTMLInputElement>document.getElementById("colorpicker1");
     color1.addEventListener("change", drawExplosion);

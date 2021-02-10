@@ -3,7 +3,7 @@ var Firework;
 (function (Firework) {
     class Firecracker {
         constructor(_x, _y, _color1, _color2, _radius, _particles) {
-            this.expendable = false;
+            this.expendable = false; //Warum false?
             this.lifetime = 4;
             this.lineWidth = 2;
             this.radiusTimeSliceValue = 0;
@@ -52,7 +52,7 @@ var Firework;
                 gradient.addColorStop(1, this.color2);
                 Firework.ctx.fillStyle = gradient;
             }
-            Firework.ctx.fillRect(-this.lineWidth / 2, this.radiusFading, this.lineWidth, this.radiusTimeSliceValue - this.radiusFading);
+            Firework.ctx.fillRect(-this.lineWidth / 2, this.radiusFading, this.lineWidth, this.radiusTimeSliceValue - this.radiusFading); //Abstand zum linken und oberen Rand, Breite, Höhe
         }
     }
     Firework.Firecracker = Firecracker;

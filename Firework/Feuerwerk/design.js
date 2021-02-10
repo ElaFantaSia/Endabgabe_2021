@@ -2,7 +2,7 @@
 var Firework;
 (function (Firework) {
     window.addEventListener("load", loadWnd);
-    let serverURL = "http://localhost:5001";
+    let serverURL = "https://endabgabe-eia2.herokuapp.com";
     let color1 = document.getElementById("colorpicker1");
     color1.addEventListener("change", drawExplosion);
     let color2 = document.getElementById("colorpicker2");
