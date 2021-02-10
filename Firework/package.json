@@ -1,0 +1,13 @@
+{
+  "name": "firework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "start": "node Server/server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
