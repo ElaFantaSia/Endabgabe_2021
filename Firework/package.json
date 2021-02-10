@@ -8,6 +8,14 @@
   "scripts": {
     "start": "node Server/server.js"
   },
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElaFantaSia/Endabgabe_2021.git"
+  },
+  "author": "Ela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElaFantaSia/Endabgabe_2021/issues"
+  },
+  "homepage": "https://github.com/ElaFantaSia/Endabgabe_2021#readme"
 }
