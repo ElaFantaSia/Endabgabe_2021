@@ -4,6 +4,9 @@ namespace Firework {
     let canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("canvas");
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;
+    ctx = <CanvasRenderingContext2D>canvas.getContext("2d"); 
+    canvas.addEventListener("mouseup", hndMouseUp);
+
     let currentFirecracker: FirecrackerInterface;
 
     let allFirecrackersToDraw: Firecracker[] = [];
@@ -21,33 +24,30 @@ namespace Firework {
     window.addEventListener("load", loadWnd);
 
     async function loadWnd(): Promise<void> {
-        ctx = <CanvasRenderingContext2D>canvas.getContext("2d"); 
-        canvas.addEventListener("mouseup", hndMouseUp);
-        console.log(serverURL + "/getAll");
         let response: Response = await fetch(serverURL + "/getAll");
         let responseString: string =  await response.text();
-        
         allFirecrackers = await JSON.parse(responseString);
+
         setCurrentFirecracker(1);
         fireCrackerDiv1.classList.add("selected");
-        window.setInterval(update, 20);
+        window.setInterval(update, 20); //Alle 20ms wird update aufgerufen
     }
 
     function update(): void {
         ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-        for (let firecracker of allFirecrackersToDraw) {
+        for (let firecracker of allFirecrackersToDraw) {    //Das Array allFirecrackersToDraw ist generell leer, bei jedem Klick wird Rakete erzeugt und darin gespeichert und Timeintervall mitgegeben und alle 20ms wird die Zeichenfunktion draw der Rakete neu aufgerufen, bis sie expendable ist
             firecracker.draw(1 / 50);
         }
 
-        for (let i: number = allFirecrackersToDraw.length - 1; i >= 0; i--) {
+        for (let i: number = allFirecrackersToDraw.length - 1; i >= 0; i--) { //Wenn Lifetime überschritten bekommt Rakete Attribut expendable und wird beim nächsten Update aus dem Array entfernt
             if (allFirecrackersToDraw[i].expendable) {
                 allFirecrackersToDraw.splice(i, 1);
             }
         }
     }
 
-    function setCurrentFirecracker(_firecrackerId: number): void {
+    function setCurrentFirecracker(_firecrackerId: number): void {  //Ausgewählter Firecracker wird als Parameter mitgegeben, dann wird das Array nach dieser id durchsucht und der Firecracker an der Stelle, wo es mit der id übereinstimmt, wird als CurrentFirecracker gespeichert
         for (let i: number = 0; i < allFirecrackers.length; i++) {
             if (allFirecrackers[i].firecrackerId == _firecrackerId)
                 currentFirecracker = allFirecrackers[i];
@@ -55,20 +55,20 @@ namespace Firework {
     }
     
     function hndClick(_event: Event): void {
-        removeColor();
-        let div: HTMLDivElement = <HTMLDivElement>_event.currentTarget;
+        removeSelected();                                                  //Alle werden entselektiert (damit nicht mehrere ausgewählt sind)
+        let div: HTMLDivElement = <HTMLDivElement>_event.currentTarget;    //Das div das angeklickt wurde wird ausgewählt und als CurrentFirecracker gespeichert
         div.classList.add("selected");
         setCurrentFirecracker(Number(div.getAttribute("firecrackerId")));
     }
 
-    function removeColor(): void {
+    function removeSelected(): void {
         fireCrackerDiv1.classList.remove("selected");
         fireCrackerDiv2.classList.remove("selected");
         fireCrackerDiv3.classList.remove("selected");
     }
 
     function hndMouseUp(_event: MouseEvent): void {
-        let bound: DOMRect = canvas.getBoundingClientRect();
+        let bound: DOMRect = canvas.getBoundingClientRect();                //DIe drei Zeilen um richtige Mausposition auf Canvas zu finden
         
         let canvasX: number = _event.pageX - bound.left - canvas.clientLeft;
         let canvasY: number = _event.pageY - bound.top - canvas.clientTop;
@@ -81,17 +81,17 @@ namespace Firework {
 
     function hndKeyDown(_event: KeyboardEvent): void {
         if (_event.key.match("1")) {
-            removeColor();
+            removeSelected();
             fireCrackerDiv1.classList.add("selected");
             setCurrentFirecracker(1);
         }   
         else if (_event.key.match("2")) {
-            removeColor();
+            removeSelected();
             fireCrackerDiv2.classList.add("selected");
             setCurrentFirecracker(2);
         }
         else if (_event.key.match("3")) {
-            removeColor();
+            removeSelected();
             fireCrackerDiv3.classList.add("selected");
             setCurrentFirecracker(3);
         }
