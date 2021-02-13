@@ -4,7 +4,7 @@ var Firework;
     let canvas = document.getElementById("canvas");
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
-    let ctx = canvas.getContext("2d");
+    let crc2 = canvas.getContext("2d");
     let centerX = canvas.width / 2;
     let centerY = canvas.height / 2;
     let serverURL = "https://endabgabe-eia2.herokuapp.com";
@@ -22,8 +22,8 @@ var Firework;
     fireCrackerDiv2.addEventListener("click", hndClick);
     let fireCrackerDiv3 = document.getElementById("firecracker3");
     fireCrackerDiv3.addEventListener("click", hndClick);
-    window.addEventListener("load", loadWnd);
-    function loadWnd() {
+    window.addEventListener("load", hndLoad);
+    function hndLoad() {
         chooseFirecracker(fireCrackerDiv1); //Default
     }
     function hndClick(_event) {
@@ -68,22 +68,22 @@ var Firework;
         await fetch(url); //Client schickt URL an Server und wartet, bis dieser seine Arbeit damit (Daten auslesen-> Datenbank) abgeschlossen und Response geliefert hat
     }
     function drawExplosion() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.save();
+        crc2.clearRect(0, 0, canvas.width, canvas.height);
+        crc2.save();
         let circleSteps = Math.PI * 2 / Number(particles.value); // ganzer Kreis durch Anzahl der Partikel
         for (let i = 0; i < Math.PI * 2; i += circleSteps) { // 360Grad; einzelne Steps Gradzahl, Kreis drehen
             drawParticle(i, 2); // i ist der Winkel, 2 Linienstärke
         }
-        ctx.restore();
+        crc2.restore();
     }
     function drawParticle(_radiusParticle, _lineWidth) {
-        ctx.setTransform(1, 0, 0, 1, centerX, centerY); //centerX und y Position Mitte; ....... (nix verschoben, drehen..)
-        ctx.rotate(_radiusParticle);
-        let gradient = ctx.createLinearGradient(-_lineWidth / 2, 0, _lineWidth, Number(radius.value)); //-Weite durch2 -> Linie genau mittig auf Linie (wird minimal verschoben), 0 ist y-Wert bleibt auf der Mitte,  _lineWidth=2, Radius
+        crc2.setTransform(1, 0, 0, 1, centerX, centerY); //centerX und y Position Mitte; ....... (nix verschoben, drehen..)
+        crc2.rotate(_radiusParticle);
+        let gradient = crc2.createLinearGradient(-_lineWidth / 2, 0, _lineWidth, Number(radius.value)); //-Weite durch2 -> Linie genau mittig auf Linie (wird minimal verschoben), 0 ist y-Wert bleibt auf der Mitte,  _lineWidth=2, Radius
         gradient.addColorStop(0, color1.value);
         gradient.addColorStop(1, color2.value);
-        ctx.fillStyle = gradient;
-        ctx.fillRect(-_lineWidth / 2, 0, _lineWidth, Number(radius.value)); //Warum nicht stroke?
+        crc2.fillStyle = gradient;
+        crc2.fillRect(-_lineWidth / 2, 0, _lineWidth, Number(radius.value)); //Warum nicht stroke?
     }
 })(Firework || (Firework = {}));
 //# sourceMappingURL=design.js.map

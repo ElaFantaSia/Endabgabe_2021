@@ -1,6 +1,7 @@
 html {
     display: flex;
     height: 100%;
+    background-color: rgb(34, 34, 104);
 }
 
 body {
@@ -53,12 +54,32 @@ body {
 
 .firecracker {
     display: flex;
-    background-color: gray;
-    height: 150px;
-    width: 150px;
+    height: 120px;
+    width: 120px;
     border-radius: 80px;
     margin: 20px;
 }
+
+#firecracker1 {
+    background-image: url("./Pictures/one_lollipop.jpg");
+    background-size: cover;
+}
+
+#firecracker1:hover {
+    
+}
+
+#firecracker2 {
+    background-image: url("./Pictures/two_cherries.jpg");
+    background-size: cover;    
+}
+
+
+#firecracker3 {
+    background-image: url("./Pictures/three_fingers.jpg");
+    background-size: cover;        
+}
+
 
 .control {
     display: flex;
@@ -70,6 +91,8 @@ body {
     justify-content: space-evenly;
 }
 
+
 .selected {
-    background-color: red;
+    height: 140px;
+    width: 140px;
 }

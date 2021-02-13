@@ -1,10 +1,10 @@
 namespace Firework {
-    export let ctx: CanvasRenderingContext2D;
+    export let crc2: CanvasRenderingContext2D;
     let serverURL: string = "https://endabgabe-eia2.herokuapp.com";
     let canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("canvas");
     canvas.width = document.body.clientWidth;
     canvas.height = document.body.clientHeight;
-    ctx = <CanvasRenderingContext2D>canvas.getContext("2d"); 
+    crc2 = <CanvasRenderingContext2D>canvas.getContext("2d"); 
     canvas.addEventListener("mouseup", hndMouseUp);
 
     let currentFirecracker: FirecrackerInterface;
@@ -21,9 +21,9 @@ namespace Firework {
     let fireCrackerDiv3: HTMLDivElement = <HTMLDivElement>document.getElementById("firecracker3");
     fireCrackerDiv3.addEventListener("click", hndClick);
 
-    window.addEventListener("load", loadWnd);
+    window.addEventListener("load", hndLoad);
 
-    async function loadWnd(): Promise<void> {
+    async function hndLoad(): Promise<void> {
         let response: Response = await fetch(serverURL + "/getAll");
         let responseString: string =  await response.text();
         allFirecrackers = await JSON.parse(responseString);
@@ -33,8 +33,10 @@ namespace Firework {
         window.setInterval(update, 20); //Alle 20ms wird update aufgerufen
     }
 
+
+
     function update(): void {
-        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height); //
 
         for (let firecracker of allFirecrackersToDraw) {    //Das Array allFirecrackersToDraw ist generell leer, bei jedem Klick wird Rakete erzeugt und darin gespeichert und Timeintervall mitgegeben und alle 20ms wird die Zeichenfunktion draw der Rakete neu aufgerufen, bis sie expendable ist
             firecracker.draw(1 / 50);
@@ -46,26 +48,7 @@ namespace Firework {
             }
         }
     }
-
-    function setCurrentFirecracker(_firecrackerId: number): void {  //Ausgewählter Firecracker wird als Parameter mitgegeben, dann wird das Array nach dieser id durchsucht und der Firecracker an der Stelle, wo es mit der id übereinstimmt, wird als CurrentFirecracker gespeichert
-        for (let i: number = 0; i < allFirecrackers.length; i++) {
-            if (allFirecrackers[i].firecrackerId == _firecrackerId)
-                currentFirecracker = allFirecrackers[i];
-        }
-    }
     
-    function hndClick(_event: Event): void {
-        removeSelected();                                                  //Alle werden entselektiert (damit nicht mehrere ausgewählt sind)
-        let div: HTMLDivElement = <HTMLDivElement>_event.currentTarget;    //Das div das angeklickt wurde wird ausgewählt und als CurrentFirecracker gespeichert
-        div.classList.add("selected");
-        setCurrentFirecracker(Number(div.getAttribute("firecrackerId")));
-    }
-
-    function removeSelected(): void {
-        fireCrackerDiv1.classList.remove("selected");
-        fireCrackerDiv2.classList.remove("selected");
-        fireCrackerDiv3.classList.remove("selected");
-    }
 
     function hndMouseUp(_event: MouseEvent): void {
         let bound: DOMRect = canvas.getBoundingClientRect();                //DIe drei Zeilen um richtige Mausposition auf Canvas zu finden
@@ -75,6 +58,17 @@ namespace Firework {
 
         let firecracker: Firecracker = new Firecracker(canvasX, canvasY, "#" + currentFirecracker.color1, "#" + currentFirecracker.color2, currentFirecracker.radius, currentFirecracker.particles);
         allFirecrackersToDraw.push(firecracker);
+    }
+
+
+
+
+
+    function setCurrentFirecracker(_firecrackerId: number): void {  //Ausgewählter Firecracker wird als Parameter mitgegeben, dann wird das Array nach dieser id durchsucht und der Firecracker an der Stelle, wo es mit der id übereinstimmt, wird als CurrentFirecracker gespeichert
+        for (let i: number = 0; i < allFirecrackers.length; i++) {
+            if (allFirecrackers[i].firecrackerId == _firecrackerId)
+                currentFirecracker = allFirecrackers[i];
+        }
     }
 
     document.addEventListener("keydown", hndKeyDown);
@@ -97,5 +91,18 @@ namespace Firework {
         }
         else 
             return;
+    }
+
+    function hndClick(_event: Event): void {
+        removeSelected();                                                  //Alle werden entselektiert (damit nicht mehrere ausgewählt sind)
+        let div: HTMLDivElement = <HTMLDivElement>_event.currentTarget;    //Das div das angeklickt wurde wird ausgewählt und als CurrentFirecracker gespeichert
+        div.classList.add("selected");
+        setCurrentFirecracker(Number(div.getAttribute("firecrackerId")));
+    }
+
+    function removeSelected(): void {
+        fireCrackerDiv1.classList.remove("selected");
+        fireCrackerDiv2.classList.remove("selected");
+        fireCrackerDiv3.classList.remove("selected");
     }
 }
