@@ -9,7 +9,7 @@ namespace Firework {
 
     let currentFirecracker: FirecrackerInterface;
 
-    let allFirecrackersToDraw: Firecracker[] = [];
+    let allFirecrackersToDraw: Moveable[] = [];
     let allFirecrackers: FirecrackerInterface[] = [];
 
     let fireCrackerDiv1: HTMLDivElement = <HTMLDivElement>document.getElementById("firecracker1");
@@ -58,9 +58,8 @@ namespace Firework {
 
         let firecracker: Firecracker = new Firecracker(canvasX, canvasY, "#" + currentFirecracker.color1, "#" + currentFirecracker.color2, currentFirecracker.radius, currentFirecracker.particles);
         allFirecrackersToDraw.push(firecracker);
+        playSound("./Sounds/1_firework_explosion.mp3");
     }
-
-
 
 
 
@@ -104,5 +103,16 @@ namespace Firework {
         fireCrackerDiv1.classList.remove("selected");
         fireCrackerDiv2.classList.remove("selected");
         fireCrackerDiv3.classList.remove("selected");
+    }
+
+    function playSound(_soundURL: string): void {
+        let audio: HTMLAudioElement = document.createElement("audio");
+        audio.style.display = "none";
+        audio.src = _soundURL;
+        audio.autoplay = true;
+        audio.onended = function (): void {
+            audio.remove(); //Remove when played.
+        };
+        document.body.appendChild(audio);
     }
 }

@@ -1,11 +1,7 @@
 namespace Firework {
-    export class Firecracker {
-        public expendable: boolean = false;  //Ist immer false, bis lifetime abgelaufen ist, dann wird es auf true gesetzt und ist expendable
-        public lifetime: number = 4; // Immer minus 20ms bzw. immer 1/50 wird mitgegeben
+    export class Firecracker extends Moveable {
+       
         public lineWidth: number = 2;
-
-        public x: number;
-        public y: number;
 
         public color1: string;
         public color2: string;
@@ -16,15 +12,14 @@ namespace Firework {
         public outerRadius: number = 0; 
 
         constructor(_x: number, _y: number, _color1: string, _color2: string, _radius: number, _particles: number) {
-            this.x = _x;
-            this.y = _y;
+            super(new Vector (_x, _y));
             this.color1 = _color1;
             this.color2 = _color2;
             this.radius = _radius;
             this.particles = _particles;
         }
 
-        public draw(_timeslice: number): void {
+        draw(_timeslice: number): void {
             this.lifetime -= _timeslice;
 
             if (this.lifetime < 0) {       //lifetime abgelaufen
@@ -62,7 +57,7 @@ namespace Firework {
         }
 
         private drawParticle(_circleStep: number): void {          //   
-            crc2.setTransform(1, 0, 0, 1, this.x, this.y);
+            crc2.setTransform(1, 0, 0, 1, this.position.x, this.position.y);
             crc2.rotate(_circleStep);
             if (this.outerRadius - this.innerRadius != 0) {
                 let gradient: CanvasGradient = crc2.createLinearGradient(-this.lineWidth / 2, 0, this.lineWidth, this.outerRadius); //Immer mitte bis äußerer Radius

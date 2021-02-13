@@ -2,6 +2,7 @@ html {
     display: flex;
     height: 100%;
     background-color: rgb(34, 34, 104);
+    color: white;
 }
 
 body {
@@ -38,18 +39,21 @@ body {
 .canvas {
     display: flex;
     flex: 1;
+
 }
 
 #canvas {
     display: flex;
     flex: 1;
     background-color: black;
+    width: 60%;
 }
 
 .fireworks {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    
 }
 
 .firecracker {
@@ -61,22 +65,19 @@ body {
 }
 
 #firecracker1 {
-    background-image: url("./Pictures/one_lollipop.jpg");
+    background-image: url("./Pictures/1_firecracker.jpg");
     background-size: cover;
 }
 
-#firecracker1:hover {
-    
-}
 
 #firecracker2 {
-    background-image: url("./Pictures/two_cherries.jpg");
+    background-image: url("./Pictures/2_firecracker.jpg");
     background-size: cover;    
 }
 
 
 #firecracker3 {
-    background-image: url("./Pictures/three_fingers.jpg");
+    background-image: url("./Pictures/3_firecracker.jpg");
     background-size: cover;        
 }
 
@@ -95,4 +96,6 @@ body {
 .selected {
     height: 140px;
     width: 140px;
+    border: yellowgreen 4px solid;
+    
 }

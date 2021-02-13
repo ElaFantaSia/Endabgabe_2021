@@ -22,6 +22,24 @@ body {
     z-index: 10;
 }
 
+#firecracker1 {
+    background-image: url("./Pictures/1_firecracker.jpg");
+    background-size: cover;
+}
+
+
+#firecracker2 {
+    background-image: url("./Pictures/2_firecracker.jpg");
+    background-size: cover;    
+}
+
+
+#firecracker3 {
+    background-image: url("./Pictures/3_firecracker.jpg");
+    background-size: cover;        
+}
+
+
 #backToDesign {
     position: absolute;
     font-size: 50px;
@@ -35,5 +53,7 @@ body {
 }
 
 .selected {
-    background-color: red;
+    height: 140px;
+    width: 140px;
+    border: yellowgreen 4px solid; 
 }

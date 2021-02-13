@@ -1,15 +1,12 @@
 "use strict";
 var Firework;
 (function (Firework) {
-    class Firecracker {
+    class Firecracker extends Firework.Moveable {
         constructor(_x, _y, _color1, _color2, _radius, _particles) {
-            this.expendable = false; //Ist immer false, bis lifetime abgelaufen ist, dann wird es auf true gesetzt und ist expendable
-            this.lifetime = 4; // Immer minus 20ms bzw. immer 1/50 wird mitgegeben
+            super(new Firework.Vector(_x, _y));
             this.lineWidth = 2;
             this.innerRadius = 0;
             this.outerRadius = 0;
-            this.x = _x;
-            this.y = _y;
             this.color1 = _color1;
             this.color2 = _color2;
             this.radius = _radius;
@@ -44,7 +41,7 @@ var Firework;
             Firework.crc2.restore();
         }
         drawParticle(_circleStep) {
-            Firework.crc2.setTransform(1, 0, 0, 1, this.x, this.y);
+            Firework.crc2.setTransform(1, 0, 0, 1, this.position.x, this.position.y);
             Firework.crc2.rotate(_circleStep);
             if (this.outerRadius - this.innerRadius != 0) {
                 let gradient = Firework.crc2.createLinearGradient(-this.lineWidth / 2, 0, this.lineWidth, this.outerRadius); //Immer mitte bis äußerer Radius
