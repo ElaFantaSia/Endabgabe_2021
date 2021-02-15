@@ -1,7 +1,7 @@
 html {
     display: block;
     height: 100%;
-    color: greenyellow;
+    color: rgb(253, 221, 40);
 }
 
 body {
@@ -16,5 +16,8 @@ body {
     flex-direction: column;
 }
 
+#startscreen {
+    text-align: center;
+}
 
 
