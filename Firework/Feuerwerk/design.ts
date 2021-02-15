@@ -9,10 +9,12 @@ namespace Firework {
         particles: number; 
     }
     
+    
     let canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("canvas");
+    let crc2: CanvasRenderingContext2D = <CanvasRenderingContext2D>canvas.getContext("2d");
+
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
-    let crc2: CanvasRenderingContext2D = <CanvasRenderingContext2D>canvas.getContext("2d");
 
     let centerX: number = canvas.width / 2;
     let centerY: number = canvas.height / 2;
@@ -20,26 +22,25 @@ namespace Firework {
     let serverURL: string = "https://endabgabe-eia2.herokuapp.com";
 
     let colorPicker1: HTMLInputElement = <HTMLInputElement>document.getElementById("colorpicker1");
-    colorPicker1.addEventListener("change", drawExplosion);
     let colorPicker2: HTMLInputElement = <HTMLInputElement>document.getElementById("colorpicker2");
-    colorPicker2.addEventListener("change", drawExplosion);
     let sliderRadius: HTMLInputElement = <HTMLInputElement>document.getElementById("radius");
-    sliderRadius.addEventListener("change", drawExplosion);
     let sliderParticles: HTMLInputElement = <HTMLInputElement>document.getElementById("particles");
-    sliderParticles.addEventListener("change", drawExplosion);
-
     let fireCrackerDiv1: HTMLDivElement = <HTMLDivElement>document.getElementById("firecracker1");
-    fireCrackerDiv1.addEventListener("click", hndClick);
-
     let fireCrackerDiv2: HTMLDivElement = <HTMLDivElement>document.getElementById("firecracker2");
-    fireCrackerDiv2.addEventListener("click", hndClick);
-
     let fireCrackerDiv3: HTMLDivElement = <HTMLDivElement>document.getElementById("firecracker3");
-    fireCrackerDiv3.addEventListener("click", hndClick);
+    let saveButton: HTMLInputElement = <HTMLInputElement>document.getElementById("save");
 
     window.addEventListener("load", hndLoad);
 
     function hndLoad(): void {
+        colorPicker1.addEventListener("change", drawExplosion);
+        colorPicker2.addEventListener("change", drawExplosion);
+        sliderRadius.addEventListener("change", drawExplosion);
+        sliderParticles.addEventListener("change", drawExplosion);
+        fireCrackerDiv1.addEventListener("click", hndClick);
+        fireCrackerDiv2.addEventListener("click", hndClick);
+        fireCrackerDiv3.addEventListener("click", hndClick);
+        saveButton.addEventListener("click", hndSave);
         chooseFirecracker(fireCrackerDiv1); //Default
     }
 
@@ -66,36 +67,14 @@ namespace Firework {
         drawExplosion();
     }
 
+
     function removeSelected(): void {
         fireCrackerDiv1.classList.remove("selected");
         fireCrackerDiv2.classList.remove("selected");
         fireCrackerDiv3.classList.remove("selected");
     }
 
-    let saveButton: HTMLInputElement = <HTMLInputElement>document.getElementById("save"); //Man kann immer nur das speichern, was gerade selektiert ist
-    saveButton.addEventListener("click", hndSave);
     
-    async function hndSave(): Promise<void> {
-
-        let firecrackerId: number = 0;
-        if (fireCrackerDiv1.classList.contains("selected")) {
-            firecrackerId = 1;
-        }
-
-        if (fireCrackerDiv2.classList.contains("selected")) {
-            firecrackerId = 2;
-        }
-
-        if (fireCrackerDiv3.classList.contains("selected")) {
-            firecrackerId = 3;
-        }
-
-        let url: string = serverURL + "/save?firecrackerId=" + firecrackerId + "&color1=" + colorPicker1.value.replace("#", "") + "&color2=" + colorPicker2.value.replace("#", "") + "&particles=" + sliderParticles.value + "&radius=" + sliderRadius.value; 
-        await fetch(url); //Client schickt URL an Server und wartet, bis dieser seine Arbeit damit (Daten auslesen-> Datenbank) abgeschlossen und Response geliefert hat
-    }
-
-    
-
     function drawExplosion(): void {
         crc2.clearRect(0, 0, canvas.width, canvas.height);
         crc2.save();
@@ -116,4 +95,38 @@ namespace Firework {
         crc2.fillStyle = gradient;
         crc2.fillRect(-_lineWidth / 2, 0, _lineWidth, Number(sliderRadius.value)); //Warum nicht stroke?
     }
+
+
+    async function hndSave(): Promise<void> {
+
+        let firecrackerId: number = 0;
+        if (fireCrackerDiv1.classList.contains("selected")) {
+            firecrackerId = 1;
+        }
+
+        if (fireCrackerDiv2.classList.contains("selected")) {
+            firecrackerId = 2;
+        }
+
+        if (fireCrackerDiv3.classList.contains("selected")) {
+            firecrackerId = 3;
+        }
+
+        let url: string = serverURL + "/save?firecrackerId=" + firecrackerId + "&color1=" + colorPicker1.value.replace("#", "") + "&color2=" + colorPicker2.value.replace("#", "") + "&particles=" + sliderParticles.value + "&radius=" + sliderRadius.value; 
+        await fetch(url); //Client schickt URL an Server und wartet, bis dieser seine Arbeit damit (Daten auslesen-> Datenbank) abgeschlossen und Response geliefert hat
+   
+        playSound("./Sounds/G.mp3");
+    }
+
+
+    function playSound(_soundURL: string): void {
+        let audio: HTMLAudioElement = document.createElement("audio");
+        audio.style.display = "none";
+        audio.src = _soundURL;
+        audio.autoplay = true;
+        audio.onended = function (): void {
+            audio.remove(); //Remove when played.
+        };
+    }
+
 }

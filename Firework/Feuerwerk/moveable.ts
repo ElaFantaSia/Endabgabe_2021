@@ -5,7 +5,7 @@ namespace Firework {
         public expendable: boolean = false;
         public lifetime: number = 4;
 
-        constructor(_position: Vector) {
+        constructor(_position?: Vector) {
             if (_position) {
                 this.position = _position.copy();
             }

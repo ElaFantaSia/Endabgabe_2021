@@ -2,10 +2,9 @@ namespace Firework {
     export let crc2: CanvasRenderingContext2D;
     let serverURL: string = "https://endabgabe-eia2.herokuapp.com";
     let canvas: HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("canvas");
-    canvas.width = document.body.clientWidth;
-    canvas.height = document.body.clientHeight;
+    canvas.width = document.body.clientWidth; //
+    canvas.height = document.body.clientHeight; //
     crc2 = <CanvasRenderingContext2D>canvas.getContext("2d"); 
-    canvas.addEventListener("mouseup", hndMouseUp);
 
     let currentFirecracker: FirecrackerInterface;
 
@@ -13,17 +12,18 @@ namespace Firework {
     let allFirecrackers: FirecrackerInterface[] = [];
 
     let fireCrackerDiv1: HTMLDivElement = <HTMLDivElement>document.getElementById("firecracker1");
-    fireCrackerDiv1.addEventListener("click", hndClick);
-
     let fireCrackerDiv2: HTMLDivElement = <HTMLDivElement>document.getElementById("firecracker2");
-    fireCrackerDiv2.addEventListener("click", hndClick);
-
     let fireCrackerDiv3: HTMLDivElement = <HTMLDivElement>document.getElementById("firecracker3");
-    fireCrackerDiv3.addEventListener("click", hndClick);
 
     window.addEventListener("load", hndLoad);
 
     async function hndLoad(): Promise<void> {
+        canvas.addEventListener("mouseup", hndMouseUp);
+        fireCrackerDiv1.addEventListener("click", hndClick);
+        fireCrackerDiv2.addEventListener("click", hndClick);
+        fireCrackerDiv3.addEventListener("click", hndClick);
+        document.addEventListener("keydown", hndKeyDown);
+
         let response: Response = await fetch(serverURL + "/getAll");
         let responseString: string =  await response.text();
         allFirecrackers = await JSON.parse(responseString);
@@ -70,7 +70,7 @@ namespace Firework {
         }
     }
 
-    document.addEventListener("keydown", hndKeyDown);
+
 
     function hndKeyDown(_event: KeyboardEvent): void {
         if (_event.key.match("1")) {
@@ -113,6 +113,5 @@ namespace Firework {
         audio.onended = function (): void {
             audio.remove(); //Remove when played.
         };
-        document.body.appendChild(audio);
     }
 }

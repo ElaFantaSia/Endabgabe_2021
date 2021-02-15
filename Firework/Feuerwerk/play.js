@@ -3,21 +3,22 @@ var Firework;
 (function (Firework) {
     let serverURL = "https://endabgabe-eia2.herokuapp.com";
     let canvas = document.getElementById("canvas");
-    canvas.width = document.body.clientWidth;
-    canvas.height = document.body.clientHeight;
+    canvas.width = document.body.clientWidth; //
+    canvas.height = document.body.clientHeight; //
     Firework.crc2 = canvas.getContext("2d");
-    canvas.addEventListener("mouseup", hndMouseUp);
     let currentFirecracker;
     let allFirecrackersToDraw = [];
     let allFirecrackers = [];
     let fireCrackerDiv1 = document.getElementById("firecracker1");
-    fireCrackerDiv1.addEventListener("click", hndClick);
     let fireCrackerDiv2 = document.getElementById("firecracker2");
-    fireCrackerDiv2.addEventListener("click", hndClick);
     let fireCrackerDiv3 = document.getElementById("firecracker3");
-    fireCrackerDiv3.addEventListener("click", hndClick);
     window.addEventListener("load", hndLoad);
     async function hndLoad() {
+        canvas.addEventListener("mouseup", hndMouseUp);
+        fireCrackerDiv1.addEventListener("click", hndClick);
+        fireCrackerDiv2.addEventListener("click", hndClick);
+        fireCrackerDiv3.addEventListener("click", hndClick);
+        document.addEventListener("keydown", hndKeyDown);
         let response = await fetch(serverURL + "/getAll");
         let responseString = await response.text();
         allFirecrackers = await JSON.parse(responseString);
@@ -50,7 +51,6 @@ var Firework;
                 currentFirecracker = allFirecrackers[i];
         }
     }
-    document.addEventListener("keydown", hndKeyDown);
     function hndKeyDown(_event) {
         if (_event.key.match("1")) {
             removeSelected();
@@ -89,7 +89,6 @@ var Firework;
         audio.onended = function () {
             audio.remove(); //Remove when played.
         };
-        document.body.appendChild(audio);
     }
 })(Firework || (Firework = {}));
 //# sourceMappingURL=play.js.map

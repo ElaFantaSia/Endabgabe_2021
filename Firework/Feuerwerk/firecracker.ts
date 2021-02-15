@@ -19,7 +19,7 @@ namespace Firework {
             this.particles = _particles;
         }
 
-        draw(_timeslice: number): void {
+        public draw(_timeslice: number): void {
             this.lifetime -= _timeslice;
 
             if (this.lifetime < 0) {       //lifetime abgelaufen
@@ -28,7 +28,7 @@ namespace Firework {
             }
             crc2.save();                   // Wert wird auf true gesetzt, wenn das nächste Mal update aufgerufen wird, wird gesehen, dass das Objekt das Attribut true hat, also wird es aus dem Array geworfen und die zugehörige draw Fkt nicht mehr aufgerufen
         
-
+            
             if (this.outerRadius < this.radius) {                          //Ist äußerer Radius kleiner als Gesamtradius (vom Nutzer eingestellt)?
                 if ((this.outerRadius + _timeslice * 300) > this.radius)   // Wenn äußerer Radius * 300 größer wäre als Gesamtradius, äußeren RAdius auf Gesamtradius setzen; ansonsten um 300 erhöhen
                     this.outerRadius = this.radius;
