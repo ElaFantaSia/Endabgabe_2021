@@ -22,28 +22,28 @@ namespace Firework {
         public draw(_timeslice: number): void {
             this.lifetime -= _timeslice;
 
-            if (this.lifetime < 0) {       //lifetime abgelaufen
+            if (this.lifetime < 0) {       
                 this.expendable = true;
                 return;
             }
-            crc2.save();                   // Wert wird auf true gesetzt, wenn das nächste Mal update aufgerufen wird, wird gesehen, dass das Objekt das Attribut true hat, also wird es aus dem Array geworfen und die zugehörige draw Fkt nicht mehr aufgerufen
+            crc2.save();                   
         
             
-            if (this.outerRadius < this.radius) {                          //Ist äußerer Radius kleiner als Gesamtradius (vom Nutzer eingestellt)?
-                if ((this.outerRadius + _timeslice * 300) > this.radius)   // Wenn äußerer Radius * 300 größer wäre als Gesamtradius, äußeren RAdius auf Gesamtradius setzen; ansonsten um 300 erhöhen
+            if (this.outerRadius < this.radius) {                          
+                if ((this.outerRadius + _timeslice * 300) > this.radius)   
                     this.outerRadius = this.radius;
                 else 
                     this.outerRadius += _timeslice * 300;
             }
 
-            if (this.outerRadius >= this.radius && this.innerRadius < this.radius) {  // Das gleiche für inneren Radius; geht erst los, wenn äußerer Radius den Gesamtradius erreicht hat
+            if (this.outerRadius >= this.radius && this.innerRadius < this.radius) {  
                 if ((this.innerRadius + _timeslice * 150) > this.radius)
                     this.innerRadius = this.radius;
                 else
                     this.innerRadius += _timeslice * 150; 
             }
 
-            if (this.innerRadius > this.outerRadius) {  //Kleinerer Radius darf nicht größer äußerer Radius sein sein
+            if (this.innerRadius > this.outerRadius) { 
                 this.innerRadius = this.radius;
             }
 
@@ -60,13 +60,12 @@ namespace Firework {
             crc2.setTransform(1, 0, 0, 1, this.position.x, this.position.y);
             crc2.rotate(_circleStep);
             if (this.outerRadius - this.innerRadius != 0) {
-                let gradient: CanvasGradient = crc2.createLinearGradient(-this.lineWidth / 2, 0, this.lineWidth, this.outerRadius); //Immer mitte bis äußerer Radius
-                gradient.addColorStop(0, this.color1);
+                let gradient: CanvasGradient = crc2.createLinearGradient(-this.lineWidth / 2, 0, this.lineWidth, this.outerRadius);                 gradient.addColorStop(0, this.color1);
                 gradient.addColorStop(1, this.color2);
                 crc2.fillStyle = gradient;
             }
             
-            crc2.fillRect(-this.lineWidth / 2, this.innerRadius, this.lineWidth, this.outerRadius - this.innerRadius); //Anfangspunkt ist der innere Radius und die Länge ist der äußere minus der innere Radius (this.outerRadius)
-        }
+            crc2.fillRect(-this.lineWidth / 2, this.innerRadius, this.lineWidth, this.outerRadius - this.innerRadius); 
+            }
     }
 }

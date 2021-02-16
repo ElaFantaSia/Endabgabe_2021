@@ -30,19 +30,19 @@ namespace Firework {
 
         setCurrentFirecracker(1);
         fireCrackerDiv1.classList.add("selected");
-        window.setInterval(update, 20); //Alle 20ms wird update aufgerufen
+        window.setInterval(update, 20); 
     }
 
 
 
     function update(): void {
-        crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height); //
+        crc2.fillRect(0, 0, crc2.canvas.width, crc2.canvas.height); 
 
-        for (let firecracker of allFirecrackersToDraw) {    //Das Array allFirecrackersToDraw ist generell leer, bei jedem Klick wird Rakete erzeugt und darin gespeichert und Timeintervall mitgegeben und alle 20ms wird die Zeichenfunktion draw der Rakete neu aufgerufen, bis sie expendable ist
+        for (let firecracker of allFirecrackersToDraw) {   
             firecracker.draw(1 / 50);
         }
 
-        for (let i: number = allFirecrackersToDraw.length - 1; i >= 0; i--) { //Wenn Lifetime überschritten bekommt Rakete Attribut expendable und wird beim nächsten Update aus dem Array entfernt
+        for (let i: number = allFirecrackersToDraw.length - 1; i >= 0; i--) { 
             if (allFirecrackersToDraw[i].expendable) {
                 allFirecrackersToDraw.splice(i, 1);
             }
@@ -51,7 +51,7 @@ namespace Firework {
     
 
     function hndMouseUp(_event: MouseEvent): void {
-        let bound: DOMRect = canvas.getBoundingClientRect();                //DIe drei Zeilen um richtige Mausposition auf Canvas zu finden
+        let bound: DOMRect = canvas.getBoundingClientRect();                
         
         let canvasX: number = _event.pageX - bound.left - canvas.clientLeft;
         let canvasY: number = _event.pageY - bound.top - canvas.clientTop;
@@ -63,7 +63,7 @@ namespace Firework {
 
 
 
-    function setCurrentFirecracker(_firecrackerId: number): void {  //Ausgewählter Firecracker wird als Parameter mitgegeben, dann wird das Array nach dieser id durchsucht und der Firecracker an der Stelle, wo es mit der id übereinstimmt, wird als CurrentFirecracker gespeichert
+    function setCurrentFirecracker(_firecrackerId: number): void {  
         for (let i: number = 0; i < allFirecrackers.length; i++) {
             if (allFirecrackers[i].firecrackerId == _firecrackerId)
                 currentFirecracker = allFirecrackers[i];
@@ -93,8 +93,8 @@ namespace Firework {
     }
 
     function hndClick(_event: Event): void {
-        removeSelected();                                                  //Alle werden entselektiert (damit nicht mehrere ausgewählt sind)
-        let div: HTMLDivElement = <HTMLDivElement>_event.currentTarget;    //Das div das angeklickt wurde wird ausgewählt und als CurrentFirecracker gespeichert
+        removeSelected();                                                  
+        let div: HTMLDivElement = <HTMLDivElement>_event.currentTarget;    
         div.classList.add("selected");
         setCurrentFirecracker(Number(div.getAttribute("firecrackerId")));
     }
@@ -111,7 +111,7 @@ namespace Firework {
         audio.src = _soundURL;
         audio.autoplay = true;
         audio.onended = function (): void {
-            audio.remove(); //Remove when played.
+            audio.remove(); 
         };
     }
 }

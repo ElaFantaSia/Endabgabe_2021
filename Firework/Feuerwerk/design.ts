@@ -54,11 +54,11 @@ namespace Firework {
         _div.classList.add("selected");
         let response: Response = await fetch(serverURL + "/getAll");
         let responseString: string =  await response.text();
-        let firecrackers: FirecrackerInterface[] = await JSON.parse(responseString);  //Alle holen und ins Firecracker-Interface speichern
+        let firecrackers: FirecrackerInterface[] = await JSON.parse(responseString);  
 
         for (let i: number = 0; i < firecrackers.length; i++) {
-            if (Number(_div.getAttribute("firecrackerId")) == firecrackers[i].firecrackerId) { //firecrackerId vom HTML mit dem vom Array verglichen
-                colorPicker1.value = "#" + firecrackers[i].color1;  //Wert der an der Stelle im Array gefunden wird, wird als Farbe in den Colorpickeln gesetzt/Wert aus DAtenbank für das angeklickte InputELement ausgelesen
+            if (Number(_div.getAttribute("firecrackerId")) == firecrackers[i].firecrackerId) { 
+                colorPicker1.value = "#" + firecrackers[i].color1;  
                 colorPicker2.value = "#" + firecrackers[i].color2;
                 sliderParticles.value = firecrackers[i].particles.toString();
                 sliderRadius.value = firecrackers[i].radius.toString();
@@ -79,21 +79,21 @@ namespace Firework {
         crc2.clearRect(0, 0, canvas.width, canvas.height);
         crc2.save();
         
-        let circleSteps: number = Math.PI * 2 / Number(sliderParticles.value); // ganzer Kreis durch Anzahl der Partikel
-        for (let i: number = 0; i < Math.PI * 2; i += circleSteps) { // 360Grad; einzelne Steps Gradzahl, Kreis drehen
-            drawParticle(i, 2); // i ist der Winkel, 2 Linienstärke
+        let circleSteps: number = Math.PI * 2 / Number(sliderParticles.value); 
+        for (let i: number = 0; i < Math.PI * 2; i += circleSteps) { 
+            drawParticle(i, 2); 
         }
         crc2.restore();
     }
 
     function drawParticle(_radiusParticle: number, _lineWidth: number): void {
-        crc2.setTransform(1, 0, 0, 1, centerX, centerY); //centerX und y Position Mitte; ....... (nix verschoben, drehen..)
+        crc2.setTransform(1, 0, 0, 1, centerX, centerY); 
         crc2.rotate(_radiusParticle);
-        let gradient: CanvasGradient = crc2.createLinearGradient(-_lineWidth / 2, 0, _lineWidth, Number(sliderRadius.value)); //-Weite durch2 -> Linie genau mittig auf Linie (wird minimal verschoben), 0 ist y-Wert bleibt auf der Mitte,  _lineWidth=2, Radius
+        let gradient: CanvasGradient = crc2.createLinearGradient(-_lineWidth / 2, 0, _lineWidth, Number(sliderRadius.value)); 
         gradient.addColorStop(0, colorPicker1.value);
         gradient.addColorStop(1, colorPicker2.value);
         crc2.fillStyle = gradient;
-        crc2.fillRect(-_lineWidth / 2, 0, _lineWidth, Number(sliderRadius.value)); //Warum nicht stroke?
+        crc2.fillRect(-_lineWidth / 2, 0, _lineWidth, Number(sliderRadius.value)); 
     }
 
 
@@ -113,8 +113,8 @@ namespace Firework {
         }
 
         let url: string = serverURL + "/save?firecrackerId=" + firecrackerId + "&color1=" + colorPicker1.value.replace("#", "") + "&color2=" + colorPicker2.value.replace("#", "") + "&particles=" + sliderParticles.value + "&radius=" + sliderRadius.value; 
-        await fetch(url); //Client schickt URL an Server und wartet, bis dieser seine Arbeit damit (Daten auslesen-> Datenbank) abgeschlossen und Response geliefert hat
-   
+        await fetch(url); 
+
         playSound("./Sounds/G.mp3");
     }
 
@@ -125,7 +125,7 @@ namespace Firework {
         audio.src = _soundURL;
         audio.autoplay = true;
         audio.onended = function (): void {
-            audio.remove(); //Remove when played.
+            audio.remove(); 
         };
     }
 
